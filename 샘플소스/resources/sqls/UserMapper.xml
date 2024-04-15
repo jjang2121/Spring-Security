@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.edu.dao.UserInfoDaoImpl">
+	
+	<!-- 로그인 처리 시 사용 -->
+	<select id="getUserInfo" parameterType="String" resultType="UserInfoVo">
+		SELECT 
+			ID ,NAME ,PASSWORD, AUTH ,JOINDATE
+		FROM MEMBER_T
+		WHERE ID = #{id}
+	</select>
+
+	<!-- 회원리스트 -->
+	<select id="getUserInfoAllList" resultType="UserInfoVo">
+		SELECT 
+			ID ,NAME ,PASSWORD, AUTH ,JOINDATE
+		FROM MEMBER_T
+		ORDER BY JOINDATE DESC
+	</select>
+
+	<!-- 회원가입 처리 시 사용 -->
+	<insert id="insertUserInfo" parameterType="UserInfoVo">
+		INSERT INTO MEMBER_T (ID ,NAME ,PASSWORD, AUTH ,JOINDATE)
+		VALUES(#{id}, #{name}, #{password}, 'ROLE_USER', CURRENT_TIMESTAMP)
+	</insert>
+
+	<!-- 자동 회원가입 처리 시 사용 -->
+	<insert id="insertAutoUserInfo" parameterType="UserInfoVo">
+		INSERT INTO MEMBER_T (ID ,NAME ,PASSWORD, AUTH ,JOINDATE)
+		VALUES(#{id}, #{name}, #{password}, #{auth}, CURRENT_TIMESTAMP)
+	</insert>
+
+</mapper>
